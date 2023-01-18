@@ -1,12 +1,12 @@
 const {
     BIRDNEST_ORIGIN,
     BIRDNEST_PROTECTED_DISTANCE,
-} = require('../constants');
+} = require('../src/constants');
 const {
     arrayToObject,
     distanceToOrigin,
     withinRestrictedArea
-} = require('../utils');
+} = require('../src/utils');
 
 describe('utils tests', () => {
     test('arrayToObject() works', () => {

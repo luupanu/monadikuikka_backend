@@ -6,11 +6,11 @@ const {
     redis,
     removeTimestampsSince,
     updateDroneDB
-} = require('../db');
+} = require('../src/db');
 const {
     distanceToOrigin,
     withinRestrictedArea
-} = require('../utils');
+} = require('../src/utils');
 
 beforeAll(() => {
     connectToDB();

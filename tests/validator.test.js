@@ -1,11 +1,11 @@
 const {
     BIRDNEST_HEIGHT,
     BIRDNEST_WIDTH,
-} = require('../constants');
+} = require('../src/constants');
 const {
     validateBirdnestData,
     validateDroneRegistryData
-} = require('../validator');
+} = require('../src/validator');
 
 describe('validator tests', () => {
     const timestamp = '2023-01-17T07:18:04Z';

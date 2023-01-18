@@ -49,6 +49,18 @@ async function getAllDronesWithPilotsAndPositions() {
 }
 
 /**
+ * Gets latest timestamp.
+ * @async
+ * @function getLatestTimestamp
+ * @returns {Array} First item is the latest timestamp, unless timestamps was empty.
+ */
+async function getLatestTimestamp() {
+    const result = await redis.ZRANGE('timestamps', 0, 0, { REV: true });
+
+    return result;
+}
+
+/**
  * Check if key exists in Redis DB.
  * @async
  * @function keyExists
@@ -171,4 +183,13 @@ if (process.env.NODE_ENV !== 'test') {
     setInterval(() => removeTimestampsSince(DB_TIMESTAMPS_REMOVE_INTERVAL_SECONDS), DB_TIMESTAMPS_REMOVE_INTERVAL_SECONDS * 1000);
 }
 
-module.exports = { connectToDB, disconnectFromDB, getAllDronesWithPilotsAndPositions, keyExists, redis, removeTimestampsSince, updateDroneDB };
+module.exports = {
+    connectToDB,
+    disconnectFromDB,
+    getAllDronesWithPilotsAndPositions,
+    getLatestTimestamp,
+    keyExists,
+    redis,
+    removeTimestampsSince,
+    updateDroneDB
+};

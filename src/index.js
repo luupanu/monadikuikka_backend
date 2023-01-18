@@ -2,6 +2,7 @@ const {
     connectToDB,
     disconnectFromDB,
     getAllDronesWithPilotsAndPositions,
+    getLatestTimestamp,
     keyExists,
     updateDroneDB,
 } = require('./db');
@@ -44,6 +45,22 @@ async function broadcastDroneData(io, timestamp) {
     if (dronesWithPilotsAndPositions.length > 0) {
         // broadcast data
         io.sockets.emit('update', timestamp, dronesWithPilotsAndPositions);
+    }
+}
+
+/**
+ * Send drone data through Socket.IO to a single client.
+ * @async
+ * @function sendDroneDataToClient
+ * @param {Object} socketId - A Socket.IO socket id.
+ * @param {string} timestamp - A timestamp in ISO 8601 format.
+ */
+async function sendDroneDataToClient(socketId, timestamp) {
+    const dronesWithPilotsAndPositions = await getAllDronesWithPilotsAndPositions();
+
+    if (dronesWithPilotsAndPositions.length > 0) {
+        // send data to a single client
+        io.to(socketId).emit('update', timestamp, dronesWithPilotsAndPositions);
     }
 }
 
@@ -209,6 +226,13 @@ app.use(express.static('public'));
 // Start server
 httpServer.listen(PORT, () => {
     console.log(`\nServer listening at ${PORT}`);
+});
+
+io.on('connect', async (socket) => {
+    // send latest data immediately to connecting client
+    const timestamp = await getLatestTimestamp();
+
+    sendDroneDataToClient(socket.id, timestamp);
 });
 
 // Connect to Redis and start polling

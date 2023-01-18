@@ -13,10 +13,11 @@
     "validator": "^13.7.0"
   },
   "scripts": {
-    "build:frontend": "rm -rf public && cd ../reaktor_2023_frontend && npm run build && cp -a build ../reaktor_2023_backend/public",
-    "deploy": "npm run build:frontend && fly deploy",
-    "lint": "eslint '*.js'",
-    "start": "redis-server redis.conf & node index.js",
+    "build:frontend:prod": "rm -rf public && cd ../reaktor_2023_frontend && npm run build:prod && cp -a build ../reaktor_2023_backend/public",
+    "build:frontend:dev": "rm -rf public && cd ../reaktor_2023_frontend && npm run build:dev && cp -a build ../reaktor_2023_backend/public",
+    "deploy": "npm run build:frontend:prod && fly deploy",
+    "lint": "eslint 'src/*.js'",
+    "start": "redis-server redis.conf & node src/index.js",
     "test": "redis-server redis.conf & jest"
   },
   "devDependencies": {

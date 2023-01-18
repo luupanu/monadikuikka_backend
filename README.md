@@ -36,16 +36,17 @@ FRONTEND_URL="http://localhost:3000"
 
 Make sure you've installed `monadikuikka_backend` first.
 
-First install `monadikuikka_frontend` to the same parent directory as `monadikuikka_backend`:
+First we need to install `monadikuikka_frontend` to the same parent directory as `monadikuikka_backend`:
 
 1) Navigate to `monadikuikka_backend` directory using terminal.
 2) `cd ../ && git clone https://github.com/luupanu/monadikuikka_frontend.git`
 3) `cd monadikuikka_frontend && npm install`
-4) `cd ../monadikuikka_backend`
+4) Create an `.env.development` file with the key `REACT_APP_WEBSOCKET_ADDRESS="ws://localhost:3001"`. The port must match `PORT` key from backend's env.
+5) (Create an `.env.production` file with the key `REACT_APP_WEBSOCKET_ADDRESS`)
 
 Then run:
 
-1) `npm run build:frontend`
+1) `npm run build:frontend:dev` (or `npm run build:frontend:prod` if you want to build in production)
 2) `npm run start`
 
 and you should be good to go.
@@ -55,8 +56,8 @@ and you should be good to go.
 1) Install [flyctl](https://fly.io/docs/hands-on/install-flyctl) and navigate to `monadikuikka_backend`.
 2) Create an account with `fly auth signup` or login using `fly auth login`
 3) Run `fly launch` and make sure to use the existing Dockerfile. Don't deploy yet.
-4) [Edit `fly.toml`](https://fly.io/docs/reference/configuration/#the-env-variables-section) to include all the keys from our `.env` file.
-5) Be sure to edit the key `FRONTEND_URL` to be the actual domain you are using. This key is used to allow Cross-origin resource sharing (CORS) between the backend and the frontend.
+4) [Edit `fly.toml`](https://fly.io/docs/reference/configuration/#the-env-variables-section) to include all the keys from our [`.env` file](#installation) as well as add `REACT_APP_WEBSOCKET_ADDRESS` that matches the domain as such: `wss://our.domain.example.com:PORT`.
+5) Be sure to edit the key `FRONTEND_URL` to be the actual domain `https://our.domain.example.com` you are using. This key is used to allow Cross-origin resource sharing (CORS) between the backend and the frontend.
 6) `npm run deploy`.
 
 # Class diagram
