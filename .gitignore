@@ -1,0 +1,16 @@
+# files
+.DS_Store
+.env
+
+# folders
+coverage/
+node_modules/
+public/
+
+# redis
+dump.rdb
+redis.conf
+
+# fly.io
+.dockerignore
+fly.toml
